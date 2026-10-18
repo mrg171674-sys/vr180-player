@@ -1,0 +1,22 @@
+[
+ [
+  "tour_state",
+  "(()=>\"tour open: \" + __app.tourState().open)()",
+  200
+ ],
+ [
+  "remap_mute",
+  "(async()=>{ __app.showTab('settings'); await new Promise(r=>setTimeout(r,300)); const row=[...document.querySelectorAll('.key-row')].find(r=>r.firstChild.textContent==='Mute'); row.querySelector('.key-btn').click(); await new Promise(r=>setTimeout(r,100)); const listening=row.querySelector('.key-btn').textContent; window.dispatchEvent(new KeyboardEvent('keydown',{key:'x',bubbles:true})); await new Promise(r=>setTimeout(r,200)); const row2=[...document.querySelectorAll('.key-row')].find(r=>r.firstChild.textContent==='Mute'); return listening + ' -> keys now: ' + [...row2.querySelectorAll('kbd')].map(k=>k.textContent).join(','); })()",
+  300
+ ],
+ [
+  "use_new_key",
+  "(async()=>{ __app.showTab('player'); await new Promise(r=>setTimeout(r,300)); const v=__app.player.video; v.muted=false; document.body.dispatchEvent(new KeyboardEvent('keydown',{key:'x',bubbles:true})); await new Promise(r=>setTimeout(r,100)); const afterX=v.muted; document.body.dispatchEvent(new KeyboardEvent('keydown',{key:'m',bubbles:true})); await new Promise(r=>setTimeout(r,100)); return 'X mutes: ' + afterX + ' | old M does nothing: ' + (v.muted===afterX); })()",
+  300
+ ],
+ [
+  "cleanup",
+  "(async()=>{ await vr180.setSettings({ keymap: {}, padmap: {} }); return \"reset\"; })()",
+  300
+ ]
+]

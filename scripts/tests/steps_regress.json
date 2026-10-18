@@ -1,0 +1,42 @@
+[
+ [
+  "play",
+  "(async()=>{ const v=__app.player.video; await v.play().catch(e=>e.message); await new Promise(r=>setTimeout(r,1500)); return {t:+v.currentTime.toFixed(2), paused:v.paused, w:v.videoWidth}; })()",
+  300
+ ],
+ [
+  "modes",
+  "(async()=>{ const out=[]; for (let i=0;i<4;i++){ document.dispatchEvent(new KeyboardEvent('keydown',{key:'v',bubbles:true})); await new Promise(r=>setTimeout(r,300)); out.push(__app.player.view.mode||document.body.className.match(/mode-\\w+/)?.[0]); } return out; })()",
+  600
+ ],
+ [
+  "themes_tabs",
+  "(async()=>{ const themes=['midnight','oled','ocean','sunset','forest','light']; const tabs=['player','library','calibrate','together','phone','settings']; const bad=[]; for (let i=0;i<themes.length;i++){ __app.showTab('settings'); await new Promise(r=>setTimeout(r,150)); document.querySelectorAll('.theme-tile')[i].click(); await new Promise(r=>setTimeout(r,350)); for (const t of tabs){ __app.showTab(t); await new Promise(r=>setTimeout(r,120)); const pg=document.querySelector('.page[data-page='+t+']'); if(!pg||!pg.offsetHeight) bad.push(themes[i]+'/'+t+' empty'); } } return {theme:document.documentElement.dataset.theme, bad}; })()",
+  400
+ ],
+ [
+  "back_midnight",
+  "(async()=>{ __app.showTab('settings'); await new Promise(r=>setTimeout(r,200)); document.querySelectorAll('.theme-tile')[0].click(); await new Promise(r=>setTimeout(r,400)); return document.querySelector('.update-text').textContent; })()",
+  500
+ ],
+ [
+  "export_dialog",
+  "(async()=>{ __app.showTab('player'); await new Promise(r=>setTimeout(r,300)); document.dispatchEvent(new KeyboardEvent('keydown',{key:'e',ctrlKey:true,bubbles:true})); await new Promise(r=>setTimeout(r,700)); const m=document.querySelector('.modal'); return m? m.innerText.split('\\n').filter(Boolean).slice(0,12).join(' | '):'no modal'; })()",
+  300
+ ],
+ [
+  "close_export",
+  "(async()=>{ document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})); await new Promise(r=>setTimeout(r,500)); return !!document.querySelector('.modal'); })()",
+  300
+ ],
+ [
+  "fullscreen",
+  "(async()=>{ await vr180.win('enter-fullscreen'); await new Promise(r=>setTimeout(r,1200)); const fs=document.body.classList.contains('is-fullscreen')||document.body.classList.contains('fullscreen'); const bar=document.querySelector('.controls'); return {fs, cls:document.body.className, barOpacity: bar && getComputedStyle(bar).opacity}; })()",
+  300
+ ],
+ [
+  "exit_fs",
+  "(async()=>{ await vr180.win('exit-fullscreen'); await new Promise(r=>setTimeout(r,900)); return document.body.className; })()",
+  500
+ ]
+]

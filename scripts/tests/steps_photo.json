@@ -1,0 +1,10 @@
+[
+  ["open", "(async()=>{ const d='C:/Users/Owner/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/ce2c1510-0d43-4f5e-9777-f8e5101ab90b/8702c2e1-a2f9-49a2-a497-ff763096460c/scratch-2026-10-14-268568/test-videos/photos/'; await __app.player.open([d+'PXL_beach.vr.jpg']); await __app.player.open([d+'city_360.jpg', d+'postcard.png', d+'garden_fisheye.jpg'], { play: false }); return JSON.stringify(__app.player.state.playlist.map(i=>i.name+':'+i.format.projection+'/'+i.format.layout)); })()", 1500],
+  ["vrphotoLR", "__app.player.setViewMode('sbs'); document.querySelector('.time').textContent", 1200],
+  ["city360", "(async()=>{ __app.player.setViewMode('vr'); await __app.player.load(1); return document.querySelector('.time').textContent; })()", 1200],
+  ["postcardCinema", "(async()=>{ await __app.player.load(2); return document.querySelector('.time').textContent; })()", 1200],
+  ["starfield", "(()=>{ __app.view.setEnv(3); __app.view.yaw = 0.9; return 'starfield, looking left'; })()", 1200],
+  ["sunset", "(()=>{ __app.view.setEnv(4); __app.view.yaw = 0.5; __app.view.pitch = 0.1; return 'sunset'; })()", 1200],
+  ["slideshow", "(async()=>{ __app.view.setEnv(1); __app.view.reset(); await __app.player.load(0); __app.settings.slideInterval = 2; document.querySelector('[title=Slideshow]').click(); await new Promise(r=>setTimeout(r,300)); document.querySelector('.popover .menu-item').click(); const seen=[__app.player.state.index]; for (let k=0;k<6;k++){ await new Promise(r=>setTimeout(r,1000)); seen.push(__app.player.state.index); } return 'indexes over 6 s: ' + seen.join(','); })()", 500],
+  ["arrows", "(async()=>{ document.querySelector('.popover .menu-item')?.click(); const a=__app.player.state.index; window.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true})); await new Promise(r=>setTimeout(r,1200)); return 'arrow right: ' + a + ' -> ' + __app.player.state.index; })()", 300]
+]

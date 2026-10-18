@@ -1,0 +1,7 @@
+[
+  ["joinByCode", "(async()=>{ __app.showTab('together'); const i=document.querySelector('.page[data-page=together] input[placeholder^=Invite]'); i.value='fw00 00e'; i.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter'})); await new Promise(r=>setTimeout(r,1500)); return document.getElementById('toast').textContent + ' | members: ' + document.querySelectorAll('.member').length; })()", 1500],
+  ["afterHostPause", "JSON.stringify({t: __app.player.video.currentTime.toFixed(1), paused: __app.player.video.paused})", 4000],
+  ["chatSeen", "document.querySelector('.chat').innerText.replace(/\\n/g,' / ')", 300],
+  ["recentRooms", "JSON.stringify(__app.settings.recentRooms)", 300],
+  ["badCode", "(async()=>{ const i=document.querySelector('.page[data-page=together] input[placeholder^=Invite]'); i.value='FW00-00F'; i.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter'})); await new Promise(r=>setTimeout(r,300)); return document.getElementById('toast').textContent; })()", 300]
+]

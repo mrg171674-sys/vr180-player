@@ -1,0 +1,10 @@
+[
+  ["midnight", "__app.showTab('settings'); document.querySelectorAll('.theme-tile')[0].click(); 'midnight'", 900],
+  ["oled", "document.querySelectorAll('.theme-tile')[1].click(); 'oled'", 900],
+  ["ocean", "document.querySelectorAll('.theme-tile')[2].click(); __app.showTab('library'); 'ocean'", 2500],
+  ["sunset", "document.querySelectorAll('.theme-tile')[3].click(); __app.showTab('player'); 'sunset'", 1200],
+  ["forest", "document.querySelectorAll('.theme-tile')[4].click(); __app.showTab('calibrate'); 'forest'", 1200],
+  ["light", "document.querySelectorAll('.theme-tile')[5].click(); __app.showTab('library'); 'light'", 2500],
+  ["lightSettings", "__app.showTab('settings'); 'x'", 1000],
+  ["back", "document.querySelectorAll('.theme-tile')[0].click(); 'reset to midnight; theme=' + __app.settings.theme", 600]
+]

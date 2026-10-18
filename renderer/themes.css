@@ -1,0 +1,107 @@
+/* Colour themes. Midnight is the default defined in style.css :root.
+   Each theme overrides the surface/text variables and sets its own default accent. */
+
+:root[data-theme=oled] {
+  --bg-deep: #000; --bg: #000; --field: #070707; --s1: #0b0b0b; --card: #0c0c0c; --card2: #151515;
+  --s3: #151515; --s4: #1b1b1b; --line: #1d1d1d; --line2: #282828; --line3: #363636;
+  --muted: #8a8a8a; --faint: #555; --dim: #555; --text: #f2f2f2; --text-2: #d9d9d9;
+}
+
+:root[data-theme=ocean] {
+  --bg-deep: #070c16; --bg: #0b1220; --field: #0e1728; --s1: #101a2c; --card: #121d31; --card2: #172540;
+  --s3: #172540; --s4: #1c2c4b; --line: #1f2f4d; --line2: #2a3d61; --line3: #3a5079;
+  --muted: #8796b3; --faint: #56648a; --dim: #56648a; --text: #e6edf8; --text-2: #c9d4e8;
+  --gold-bg: #1d4a7c; --gold: #8ec5ff;
+  --green: #2563b8; --green-hi: #4a8ef0;
+}
+
+:root[data-theme=sunset] {
+  --bg-deep: #120a17; --bg: #1a1020; --field: #1f1326; --s1: #22152a; --card: #26182f; --card2: #2e1d38;
+  --s3: #2e1d38; --s4: #382341; --line: #3a2544; --line2: #4a2f56; --line3: #5c3b6a;
+  --muted: #b39ab8; --faint: #7a5f82; --dim: #7a5f82; --text: #f6eaf2; --text-2: #e8d5e2;
+  --gold-bg: #7a3a1e; --gold: #ffb36b;
+  --green: #c4562a; --green-hi: #f07a3c;
+}
+
+:root[data-theme=forest] {
+  --bg-deep: #09100c; --bg: #0e1612; --field: #111c16; --s1: #13201a; --card: #15241c; --card2: #1b2e24;
+  --s3: #1b2e24; --s4: #22382c; --line: #22382c; --line2: #2d4839; --line3: #3c5c4a;
+  --muted: #8fae9c; --faint: #5c7a68; --dim: #5c7a68; --text: #e7f3ec; --text-2: #cfe3d7;
+  --gold-bg: #4f5a1d; --gold: #d9e48a;
+  --green: #2f7d4f; --green-hi: #4cbf7a;
+}
+
+:root[data-theme=light] {
+  --bg-deep: #dde1e7; --bg: #eceff3; --field: #ffffff; --s1: #f3f5f8; --card: #ffffff; --card2: #e8ebf0;
+  --s3: #e7eaef; --s4: #dce0e6; --line: #dadee4; --line2: #c8cdd5; --line3: #b3b9c3;
+  --muted: #5f6672; --faint: #9aa1ab; --dim: #9aa1ab; --text: #1d2129; --text-2: #2d333d; --text-strong: #000;
+  --knob: #ffffff; --track: #0000001a; --tint: #0000000d;
+  --gold-bg: #b8892c; --gold: #8a5a00;
+  --green: #23874d; --green-hi: #1f9e58;
+}
+:root[data-theme=light] .card, :root[data-theme=light] .modal-card, :root[data-theme=light] .popover,
+:root[data-theme=light] .jobs-panel, :root[data-theme=light] .tour-card { box-shadow: 0 1px 2px #0000000f, 0 4px 14px #00000012; }
+:root[data-theme=light] .tooltip { background: #1d2129; color: #fff; border-color: #1d2129; }
+:root[data-theme=light] .tooltip::after { background: #1d2129; border-color: #1d2129; }
+:root[data-theme=light] .seg button.active { background: #fff; box-shadow: 0 1px 3px #0000001f; }
+:root[data-theme=light] .toggle:not(.is-on)::before { background: #e7eaef; }
+:root[data-theme=light] .strip-btn { color: #fff; border-color: #fff; }
+:root[data-theme=light] .num input { color: var(--text); }
+:root[data-theme=light] #toast { background: #fff; }
+
+/* Switching theme: everything crossfades for a moment */
+:root.theme-switching, :root.theme-switching * , :root.theme-switching *::before {
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease !important;
+}
+
+/* ---------- extra motion ---------- */
+/* tab highlight slides between tabs */
+#tabs { position: relative; }
+.tab-ind { position: absolute; top: 0; left: 0; height: 34px; border-radius: 8px; border: 1.5px solid var(--tc, var(--green-hi));
+  background: color-mix(in srgb, var(--tc, var(--green-hi)) 14%, transparent); pointer-events: none;
+  transition: transform .3s cubic-bezier(.3, 1.4, .5, 1), border-color .3s, background .3s; }
+.tab.active { border-color: transparent !important; background: none !important; }
+.tab { position: relative; z-index: 1; }
+
+/* library tiles fade up one after another */
+.tile { animation: tileIn .35s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(min(var(--i, 0), 18) * 28ms); }
+@keyframes tileIn { from { opacity: 0; transform: translateY(10px) scale(.98); } }
+.tile:hover { box-shadow: 0 10px 24px #0005; }
+
+/* cards get a soft glow on hover */
+.card { transition: border-color .2s, box-shadow .25s; }
+.card:hover { border-color: var(--line2); }
+
+/* press ripple on buttons */
+.btn, .ibtn, .wbtn, .tab { overflow: hidden; }
+.ripple { position: absolute; border-radius: 50%; pointer-events: none; background: currentColor; opacity: .22; transform: scale(0);
+  animation: ripple .5s ease-out forwards; }
+@keyframes ripple { to { transform: scale(2.6); opacity: 0; } }
+.btn { position: relative; }
+
+/* toasts spring in */
+#toast.show { animation: toastIn .45s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes toastIn { from { transform: translateX(-50%) translateY(24px) scale(.94); opacity: 0; } }
+
+/* items leaving a list fade and collapse */
+.leaving { animation: leave .22s ease forwards !important; overflow: hidden; }
+@keyframes leave { to { opacity: 0; transform: translateX(12px); max-height: 0; padding-top: 0; padding-bottom: 0; margin: 0; } }
+
+/* theme picker tiles */
+.themes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.theme-tile { border: 2px solid var(--line); border-radius: 10px; padding: 6px; cursor: pointer; background: none; text-align: left; transition: border-color .2s, transform .15s; }
+.theme-tile:hover { transform: translateY(-2px); }
+.theme-tile.active { border-color: var(--green-hi); }
+.theme-prev { height: 46px; border-radius: 6px; display: grid; grid-template-columns: 22% 1fr; gap: 4px; padding: 5px; }
+.theme-prev i { border-radius: 4px; display: block; }
+.theme-prev .side { display: flex; flex-direction: column; gap: 3px; }
+.theme-prev .side i { height: 6px; }
+.theme-name { font-size: 12px; margin-top: 5px; display: flex; align-items: center; gap: 6px; }
+
+/* things drawn on top of video thumbnails always use light text */
+.tile .badge, .tile .dur { color: #f2f2f2; }
+.tile .badge.g { color: #7be0a3; }
+.tile .badge.y { color: #e8c46a; }
+
+/* Light theme: the gold "Convert" buttons need dark gold text to be readable */
+:root[data-theme=light] .btn.gold { color: #7a4f00; }

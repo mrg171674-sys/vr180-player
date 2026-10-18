@@ -1,0 +1,1 @@
+[["dbg", "JSON.stringify({tour: __app.tourState(), tourDone: __app.settings.tourDone, tourEl: !!document.querySelector('.tour')})", 300]]

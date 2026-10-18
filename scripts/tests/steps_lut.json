@@ -1,0 +1,4 @@
+[
+  ["ready", "(async()=>{ for(let i=0;i<80;i++){ if(window.__app && __app.player.video.readyState>=2) break; await new Promise(r=>setTimeout(r,250)); } __app.player.video.pause(); return 'ok'; })()", 300],
+  ["lut", "(async()=>{ const V=__app.view; const gl=V.renderer.getContext(); const px=()=>{ V.render(true); const b=new Uint8Array(4); gl.readPixels(Math.floor(V.canvas.width*0.25), Math.floor(V.canvas.height/2), 1,1, gl.RGBA, gl.UNSIGNED_BYTE, b); return [...b].slice(0,3); }; await __app.player.setCalib({ lut: 'builtin:bw', pictureOn: true }); await new Promise(r=>setTimeout(r,600)); const bw=px(); await __app.player.setCalib({ lut: null }); await new Promise(r=>setTimeout(r,300)); const col=px(); return 'with B&W look: ' + bw.join(',') + ' | without: ' + col.join(','); })()", 300]
+]

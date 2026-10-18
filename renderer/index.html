@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; connect-src 'self' media:; media-src 'self' media: blob:; img-src 'self' data: media: blob:; style-src 'self' 'unsafe-inline'">
+  <title>VR180 Player</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="themes.css">
+</head>
+<body>
+  <div id="app">
+    <header id="titlebar">
+      <nav id="tabs"></nav>
+      <div class="app-title"><img class="app-logo" src="icon.png" alt="">VR180 Player</div>
+      <div id="winBtns"></div>
+    </header>
+    <div id="strip"></div>
+
+    <div id="pages">
+      <!-- Player -->
+      <section class="page" data-page="player">
+        <div id="pillbar"></div>
+        <div id="playerBody">
+          <div id="stageSlot">
+            <div id="stage">
+              <canvas id="vrCanvas"></canvas>
+              <video id="video" crossorigin="anonymous" playsinline></video>
+              <div id="hint" class="hint">Drag to look around · scroll to zoom</div>
+              <div id="osd"></div>
+              <div id="empty"></div>
+              <div id="busy" hidden><div class="spinner"></div><div id="busyText">Preparing preview…</div><div class="bar"><i id="busyBar"></i></div></div>
+              <div id="dropOverlay"><div>Drop to play</div></div>
+            </div>
+          </div>
+          <aside id="playlist"></aside>
+        </div>
+        <footer id="controls"></footer>
+      </section>
+
+      <section class="page" data-page="library"></section>
+      <section class="page" data-page="calibrate"></section>
+      <section class="page" data-page="together"></section>
+      <section class="page" data-page="phone"></section>
+      <section class="page" data-page="settings"></section>
+    </div>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+[
+  ["queue", "(async()=>{ const base = 'C:/Users/Owner/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/ce2c1510-0d43-4f5e-9777-f8e5101ab90b/8702c2e1-a2f9-49a2-a497-ff763096460c/scratch-2026-10-14-268568/test-videos/'; await window.vr180.queueAdd([{ input: base + 'shaky_fisheye_LR.mp4', output: base + 'out/crash_test.mp4', projection: 'fisheye', layout: 'sbs', fov: 180, crf: 22, stabilize: 'strong', encoder: 'cpu' }, { input: base + 'lens_eye.mp4', output: base + 'out/crash_test2.mp4', projection: 'fisheye', layout: '2d', fov: 180, crf: 24 }]); return 'queued 2'; })()", 2500],
+  ["midway", "(async()=>JSON.stringify((await window.vr180.queueList()).map(j=>j.name+':'+j.status+':'+Math.round(j.fraction*100)+'%')))()", 100]
+]

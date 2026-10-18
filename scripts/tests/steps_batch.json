@@ -1,0 +1,16 @@
+[
+  ["closetour", "document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})); window.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})); __app.showTab('library'); 'ok'", 9000],
+  ["select", "(()=>{ const want=['lens_eye.mp4','fisheye_mono.mp4','GOPR0042.mp4']; const tiles=[...document.querySelectorAll('.tile')]; let n=0; for (const t of tiles) { if (want.some(w=>t.title.endsWith('\\\\'+w))) { t.dispatchEvent(new MouseEvent('click',{ctrlKey:true,bubbles:true})); n++; } } return n + ' selected; bar: ' + document.querySelector('.sel-bar').textContent; })()", 800],
+  ["dialog", "document.querySelector('[data-tour=batch]').click(); 'opened'", 1000],
+  ["queued", "(()=>{ const b=[...document.querySelectorAll('.modal .btn.primary')].pop(); const label=b.textContent; b.click(); return label; })()", 1500],
+  ["cancel3", "(async()=>{ const list = await window.vr180.queueList(); const q = list.filter(j=>j.status==='queued').pop(); if (q) await window.vr180.queueCancel(q.id); return JSON.stringify(list.map(j=>j.name+':'+j.status)); })()", 1200],
+  ["jobsPanel", "document.querySelectorAll('.job').length + ' jobs shown'", 30000],
+  ["jobsDone", "(async()=>JSON.stringify((await window.vr180.queueList()).map(j=>j.name+':'+j.status)))()", 500],
+  ["spatial", "(async()=>{ document.querySelector('.jobs-panel .ibtn')?.click(); __app.showTab('player'); await __app.player.open([document.querySelector('.tile[title$=\"quad_clip.mp4\"]').title]); await new Promise(r=>setTimeout(r,1500)); __app.player.video.play(); await new Promise(r=>setTimeout(r,800)); const a=__app.player.audio; const m0 = a.spatial ? a.spatial.matrix.map(r=>r.map(v=>+v.toFixed(2))) : null; __app.view.yaw = Math.PI/2; await new Promise(r=>setTimeout(r,300)); const m1 = a.spatial ? a.spatial.matrix.map(r=>r.map(v=>+v.toFixed(2))) : null; __app.view.yaw = 0; return JSON.stringify({ambisonic: __app.player.current().info.ambisonic, spatial: !!a.spatial, ctx: a.ctx && a.ctx.state, look0: m0, lookLeft90: m1, gainX_fromY: a.spatial && +a.spatial.rot[0][1].gain.value.toFixed(2)}); })()", 500],
+  ["sfx", "(()=>{ const errs=[]; for (const n of __app.sfx.names) { try { __app.sfx.play(n); } catch(e) { errs.push(n+':'+e.message); } } return 'played ' + __app.sfx.names.length + ' sounds, errors: ' + JSON.stringify(errs); })()", 1500],
+  ["bench", "(async()=>{ await __app.player.open([document.querySelector('.tile[title$=\"sync_test_LR.mp4\"]').title]); __app.showTab('settings'); await new Promise(r=>setTimeout(r,800)); document.querySelector('[data-tour=bench]').click(); return 'started'; })()", 6000],
+  ["benchMid", "document.querySelector('.bench').innerText.replace(/\\n/g,' | ')", 9000],
+  ["benchDone", "document.querySelector('.bench-result').innerText.replace(/\\n/g,' | ')", 500],
+  ["stuckStart", "(async()=>{ document.querySelector('[data-tour=bench]').click(); await new Promise(r=>setTimeout(r,1200)); __app.player.video.playbackRate = 0; return 'video frozen (rate 0)'; })()", 4500],
+  ["stuck", "document.querySelector('.bench').className + ' :: ' + document.querySelector('.bench').innerText.replace(/\\n/g,' | ')", 500]
+]

@@ -1,0 +1,6 @@
+[
+  ["host", "(async()=>{ __app.showTab('together'); document.querySelector('.page[data-page=together] .btn.primary').click(); await new Promise(r=>setTimeout(r,1500)); return 'code shown: ' + (document.querySelector('.invite .code')||{}).textContent; })()", 9000],
+  ["hostState", "document.querySelectorAll('.member').length + ' members; chat: ' + document.querySelector('.chat').innerText.replace(/\\n/g,' / ')", 300],
+  ["pause", "(()=>{ __app.showTab('player'); __app.player.togglePlay(); __app.player.seekTo(20); return 'paused & seeked'; })()", 3000],
+  ["chat", "(async()=>{ __app.showTab('together'); const i=document.querySelector('.page[data-page=together] input[placeholder^=Say]'); i.value='hello from host'; i.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter'})); return 'sent'; })()", 4000]
+]

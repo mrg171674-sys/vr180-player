@@ -1,0 +1,27 @@
+[
+ [
+  "reset",
+  "__app.player.setCalib({leftV:0,rightV:0,leftRoll:0,rightRoll:0}); 'reset'",
+  500
+ ],
+ [
+  "before",
+  "(async()=>{ const P=__app.player, V=__app.view; P.video.pause(); P.seekTo(3); await new Promise(r=>setTimeout(r,600)); V.showEye(1); const a=await window.vr180.saveSnapshot(V.snapshot(),'eyeL_before'); V.showEye(2); const b=await window.vr180.saveSnapshot(V.snapshot(),'eyeR_before'); V.showEye(1); return a+' || '+b; })()",
+  1500
+ ],
+ [
+  "calib",
+  "__app.showTab('calibrate'); document.querySelector('[data-tour=align]').click(); 'clicked'",
+  7000
+ ],
+ [
+  "after",
+  "(()=>{ const c=__app.player.current().calib; return JSON.stringify({leftV:c.leftV,rightV:c.rightV,leftRoll:c.leftRoll,rightRoll:c.rightRoll}) + ' :: ' + document.getElementById('toast').textContent; })()",
+  300
+ ],
+ [
+  "snap2",
+  "(async()=>{ const P=__app.player, V=__app.view; __app.showTab('player'); await new Promise(r=>setTimeout(r,600)); V.showEye(1); const a=await window.vr180.saveSnapshot(V.snapshot(),'eyeL_after'); V.showEye(2); const b=await window.vr180.saveSnapshot(V.snapshot(),'eyeR_after'); V.showEye(1); return a+' || '+b; })()",
+  1500
+ ]
+]

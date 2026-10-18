@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#121212">
+  <meta name="referrer" content="no-referrer">
+  <title>VR180 Player</title>
+  <link rel="icon" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="stylesheet" href="phone.css">
+</head>
+<body>
+  <!-- connection screens -->
+  <section id="screen-wait" class="screen show">
+    <div class="logo">180°</div>
+    <h1>VR180 Player</h1>
+    <p id="waitText">Connecting to your PC…</p>
+    <div class="spinner"></div>
+  </section>
+  <section id="screen-pin" class="screen">
+    <div class="logo">180°</div>
+    <h1>Enter the PIN</h1>
+    <p>Type the PIN shown in the Phone tab on your PC.</p>
+    <input id="pin" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="8">
+    <button id="pinBtn" class="btn primary">Connect</button>
+    <p id="pinMsg" class="err"></p>
+    <a class="trust-link" href="/ca.crt">Stop the "not private" warning</a>
+  </section>
+  <section id="screen-msg" class="screen">
+    <div class="logo">180°</div>
+    <h1 id="msgTitle"></h1>
+    <p id="msgText"></p>
+    <button id="retryBtn" class="btn">Try again</button>
+  </section>
+
+  <!-- player -->
+  <section id="screen-player" class="screen">
+    <div id="stage">
+      <canvas id="vrCanvas"></canvas>
+      <video id="video" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="fsProxy" playsinline muted></video>
+      <div id="subs"></div>
+      <div id="hint" hidden></div>
+      <div id="resumeBar" hidden><span id="resumeText"></span><button id="resumeGo" class="chip on">Continue</button><button id="resumeNo" class="chip">✕</button></div>
+      <div id="loading" hidden><div class="spinner"></div><span id="loadingText">Loading…</span></div>
+    </div>
+
+    <div id="top" class="bar">
+      <div id="title"></div>
+      <div class="seg" id="modeSeg"><button data-mode="watch" class="on">Watch</button><button data-mode="remote">Remote</button></div>
+    </div>
+
+    <div id="bottom" class="bar">
+      <input id="seek" type="range" min="0" max="1000" value="0">
+      <div class="row">
+        <button id="play" class="ib" aria-label="Play">▶</button>
+        <span id="time">0:00 / 0:00</span>
+        <span class="grow"></span>
+        <button id="fsBtn" class="ib" aria-label="Fullscreen" title="Fullscreen">⛶</button>
+        <button id="vrBtn" class="chip vr-chip" hidden title="Watch in your headset (Quest and other standalone headsets)">VR</button>
+        <button id="tilt" class="chip">Tilt</button>
+        <button id="cardboard" class="chip">Cardboard</button>
+        <button id="recenter" class="chip">Recenter</button>
+        <button id="follow" class="chip">Follow PC</button>
+        <button id="cc" class="chip">CC</button>
+        <button id="chapBtn" class="chip" hidden>Chapters</button>
+        <button id="moreBtn" class="chip">⋯ More</button>
+      </div>
+    </div>
+
+    <!-- More: download, fullscreen style, certificate -->
+    <div id="sheet" hidden>
+      <div class="sheet-card">
+        <div class="sheet-head"><b>More</b><button id="sheetClose" class="ib" aria-label="Close">✕</button></div>
+        <section>
+          <h3>Download to this phone</h3>
+          <p class="small">Save the video to watch without Wi-Fi. The PC has to allow it.</p>
+          <div id="dlOptions">
+            <button class="opt" data-kind="phone"><b>Phone size</b><span id="dlPhoneSize">1080p · smaller</span></button>
+            <button class="opt" data-kind="original"><b>Original</b><span id="dlOrigSize">full quality</span></button>
+          </div>
+          <div id="dlStatus" hidden><div class="bar-track"><i id="dlBar"></i></div><p id="dlText"></p></div>
+        </section>
+        <section id="fsStyleSec" hidden>
+          <h3>Fullscreen style</h3>
+          <div class="seg" id="fsStyle"><button data-style="native">No Safari bar</button><button data-style="fill">Keep my controls</button></div>
+          <p class="small">"No Safari bar" uses the iPhone's own video player: tilt to look around, use its buttons to pause. "Keep my controls" fills the screen but Safari's address bar stays.</p>
+        </section>
+        <section>
+          <h3>"Not private" warning</h3>
+          <p class="small">Install this PC's certificate once and the warning goes away for good. Ask the person at the PC for the steps; they're in the Phone tab.</p>
+          <a class="btn" href="/ca.crt">Get this PC's certificate</a>
+        </section>
+      </div>
+    </div>
+
+    <!-- chapters of this video -->
+    <div id="chapSheet" class="sheet" hidden>
+      <div class="sheet-card">
+        <div class="sheet-head"><b>Chapters</b><button id="chapClose" class="ib" aria-label="Close">✕</button></div>
+        <div id="chapList"></div>
+      </div>
+    </div>
+    <div id="trustBar" hidden><span>This device is remembered. Bookmark <b id="trustUrl"></b> to reconnect without a code.</span><button id="trustOk" class="ib" aria-label="OK">✕</button></div>
+
+    <!-- remote control for the PC -->
+    <div id="remote" hidden>
+      <div id="ctlAsk" hidden>
+        <p id="ctlText">The PC has to allow this phone to control it.</p>
+        <button id="ctlBtn" class="btn primary">Ask the PC for control</button>
+      </div>
+      <div id="pad"><span>Drag here to look around on the PC</span></div>
+      <div class="remote-row">
+        <button data-cmd="prev" class="rb">⏮</button>
+        <button data-cmd="back" class="rb">−10s</button>
+        <button data-cmd="toggle" class="rb big">⏯</button>
+        <button data-cmd="fwd" class="rb">+10s</button>
+        <button data-cmd="next" class="rb">⏭</button>
+      </div>
+      <div class="remote-row">
+        <button data-cmd="view" class="rb wide">VR / Flat</button>
+        <button data-cmd="recenter" class="rb wide">Reset view</button>
+        <button data-cmd="volup" class="rb">🔊+</button>
+        <button data-cmd="voldown" class="rb">🔉−</button>
+      </div>
+      <div id="upnextBox" hidden><h3>Up next on the PC</h3><div id="upnext"></div></div>
+      <p class="hint">Remote mode controls the video on your PC.</p>
+    </div>
+  </section>
+
+  <script src="hls.js"></script>
+  <script type="module" src="phone.js"></script>
+</body>
+</html>

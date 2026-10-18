@@ -1,0 +1,15 @@
+[
+  ["setup", "window.__ui = () => JSON.stringify({ shown: document.body.classList.contains('show-ui'), opacity: getComputedStyle(document.getElementById('controls')).opacity, yaw: +__app.view.yaw.toFixed(3), pitch: +__app.view.pitch.toFixed(3) }); window.__drag = async (y0, y1) => { const c = document.getElementById('vrCanvas'); const H = innerHeight, x = innerWidth / 2; const ev = (type, y, b) => { const o = { clientX: x + (y - y0) * 0.5, clientY: y, buttons: b, button: 0, bubbles: true, pointerId: 1, pointerType: 'mouse', isPrimary: true }; c.dispatchEvent(new PointerEvent(type, o)); if (type === 'pointermove') document.dispatchEvent(new MouseEvent('mousemove', o)); }; ev('pointerdown', H * y0, 1); const states = []; for (let i = 1; i <= 10; i++) { ev('pointermove', H * (y0 + (y1 - y0) * i / 10), 1); await new Promise(r => setTimeout(r, 120)); states.push(document.body.classList.contains('show-ui')); } ev('pointerup', H * y1, 0); return states; }; window.vr180.win('enter-fullscreen'); 'fullscreen'", 3600],
+  ["1_afterEnter", "__ui()", 100],
+  ["2_dragMiddle", "(async()=>{ const s = await __drag(0.4, 0.6); return 'shown during drag: ' + JSON.stringify(s) + ' -> ' + __ui(); })()", 800],
+  ["3_dragTo70", "(async()=>{ const s = await __drag(0.3, 0.7); return 'shown during drag: ' + JSON.stringify(s) + ' -> ' + __ui(); })()", 800],
+  ["4_moveBottom", "document.dispatchEvent(new MouseEvent('mousemove', { clientX: 500, clientY: innerHeight * 0.95, bubbles: true })); 'moved to 95%'", 500],
+  ["4b_state", "__ui()", 100],
+  ["5_moveMiddle", "document.dispatchEvent(new MouseEvent('mousemove', { clientX: 500, clientY: innerHeight * 0.5, bubbles: true })); 'moved to 50%'", 1200],
+  ["5b_state", "__ui()", 100],
+  ["6_keys", "['ArrowRight', ' ', 'ArrowUp'].forEach(k => window.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true }))); 'pressed keys'", 600],
+  ["6b_state", "__ui() + ' osd=' + document.getElementById('osd').textContent", 100],
+  ["7_zone40", "(()=>{ __app.settings.fsZone = 40; document.dispatchEvent(new MouseEvent('mousemove', { clientX: 500, clientY: innerHeight * 0.65, bubbles: true })); return 'zone 40%, moved to 65%'; })()", 500],
+  ["7b_state", "__ui()", 100],
+  ["exit", "__app.settings.fsZone = 20; window.vr180.win('exit-fullscreen')", 800]
+]

@@ -1,0 +1,106 @@
+{
+  "name": "vr180-player",
+  "productName": "VR180 Player",
+  "version": "2.0.0",
+  "description": "Play 180x180 fisheye/equirect video as VR and export VR180 files",
+  "main": "main.js",
+  "author": "VR180 Player",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis portable --publish never",
+    "release": "electron-builder --win nsis portable --publish always",
+    "icons": "electron scripts/make-icons.js"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9",
+    "ffmpeg-static": "5.2.0",
+    "hls.js": "^1.5.17",
+    "node-forge": "^1.4.0",
+    "onnxruntime-web": "^1.20.1",
+    "qrcode": "^1.5.4",
+    "selfsigned": "^2.4.1",
+    "three": "0.169.0"
+  },
+  "devDependencies": {
+    "electron": "33.2.0",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "app.vr180.player",
+    "productName": "VR180 Player",
+    "files": [
+      "main.js",
+      "preload.js",
+      "depth-preload.js",
+      "lib/**",
+      "renderer/**",
+      "phone/**",
+      "node_modules/**",
+      "!node_modules/onnxruntime-web/dist/**",
+      "!node_modules/onnxruntime-web/lib/**",
+      "node_modules/onnxruntime-web/dist/ort.webgpu.bundle.min.mjs",
+      "node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.jsep.mjs",
+      "node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.jsep.wasm"
+    ],
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "signAndEditExecutable": true,
+      "icon": "build/icon.ico"
+    },
+    "portable": {
+      "artifactName": "VR180-Player-Portable-${version}.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "artifactName": "VR180-Player-Setup-${version}.exe",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico"
+    },
+    "fileAssociations": [
+      {
+        "ext": [
+          "mp4",
+          "mov",
+          "m4v",
+          "mkv",
+          "webm"
+        ],
+        "name": "Video",
+        "description": "Video",
+        "role": "Viewer"
+      },
+      {
+        "ext": [
+          "vr.jpg"
+        ],
+        "name": "VR180 Photo",
+        "role": "Viewer"
+      }
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "mrg171674-sys",
+      "repo": "vr180-player",
+      "releaseType": "release"
+    },
+    "directories": {
+      "buildResources": "build"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrg171674-sys/vr180-player.git"
+  }
+}

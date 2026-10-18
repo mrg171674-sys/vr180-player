@@ -1,0 +1,5 @@
+[
+  ["strip", "document.getElementById('strip').innerText.replace(/\\n/g,' | ')", 300],
+  ["resume", "(()=>{ [...document.querySelectorAll('.strip-btn')].find(b=>b.textContent==='Resume').click(); return 'clicked resume'; })()", 30000],
+  ["done", "(async()=>JSON.stringify((await window.vr180.queueList()).map(j=>j.name+':'+j.status+':'+j.stage)))()", 100]
+]

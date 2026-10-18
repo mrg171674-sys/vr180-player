@@ -1,0 +1,5 @@
+[
+  ["ready", "(async()=>{ for(let i=0;i<80;i++){ if(window.__app) break; await new Promise(r=>setTimeout(r,250)); } __app.showTab('player'); await __app.player.open(['C:/Users/Owner/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/ce2c1510-0d43-4f5e-9777-f8e5101ab90b/8702c2e1-a2f9-49a2-a497-ff763096460c/scratch-2026-10-14-268568/test-videos/photos/postcard.png']); await new Promise(r=>setTimeout(r,1200)); const d=await import('./depth.js'); d.setDepthCfg({ on: true, strength: 100, pop: 35 }); d.updateDepth(true); for(let i=0;i<60;i++){ await new Promise(r=>setTimeout(r,100)); if(d.depthStats()?.runs>0) break; } __app.player.setViewMode('sbs'); await new Promise(r=>setTimeout(r,800)); __app.player.openDepth(); return 'ok'; })()", 1200],
+  ["anaglyph", "(async()=>{ document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})); __app.player.setViewMode('anaglyph'); await new Promise(r=>setTimeout(r,600)); return 'ok'; })()", 900],
+  ["cleanup", "(async()=>{ const d=await import('./depth.js'); d.setDepthCfg({ on: false, strength: 50 }); return 'ok'; })()", 300]
+]
