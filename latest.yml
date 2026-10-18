@@ -1,0 +1,8 @@
+version: 2.1.0
+files:
+  - url: VR180-Player-Setup-2.1.0.exe
+    sha512: EW8W40U/7Q/KhsUUsVy2f/hs11wmPeXRlu9MV47qCRJDYb8Ep8I499DnSSqkVcvzHPEsPAakNiMy99ovi2vBlQ==
+    size: 113183554
+path: VR180-Player-Setup-2.1.0.exe
+sha512: EW8W40U/7Q/KhsUUsVy2f/hs11wmPeXRlu9MV47qCRJDYb8Ep8I499DnSSqkVcvzHPEsPAakNiMy99ovi2vBlQ==
+releaseDate: '2026-10-18T18:39:21.224Z'
